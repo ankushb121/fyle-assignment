@@ -1,0 +1,67 @@
+<section class="container">
+    
+    <div class="col-md-10 offset-md-1 " *ngIf="repoDetails">
+        <div class="col-md-12 row">
+            <div class="col-md-3">
+                <img src="{{userDetail.avatar_url}}}" class="rounded-circle" alt="User Photo" width="230" height="150">
+                <div class="row">
+                    <span><i class="bi bi-link"></i> <a href="https://github.com/{{userDetail.login}}"
+                            target="_blank">https://github.com/{{userDetail.login}}</a></span>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <ul style="list-style-type:none;">
+                    <li *ngIf="userDetail.name">{{userDetail.name}}</li>
+                    <li *ngIf="userDetail.bio">{{userDetail.bio}}</li>
+                    <li *ngIf="userDetail.location"><span><i
+                                class="bi bi-geo-alt-fill"></i></span>{{userDetail.location}}</li>
+                    <li *ngIf="userDetail.twitter_username">Twitter: <a
+                            href="https://twitter.com/{{userDetail.twitter_username}}"
+                            target="_blank">https://twitter.com/{{userDetail.twitter_username}}</a> </li>
+                </ul>
+            </div>
+        </div>
+        <div class="row table-section">
+            <div class="col-md-6" *ngFor="let item of repoDetails; let i = index" style="padding-top: 20px;">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{item.name}}</h5>
+                        <p class="card-text">{{item.description}}</p>
+                        <div>
+                            <button class="btn btn-primary" *ngFor="let item of userDetail.topics;"
+                                style="margin-left: 10px;">{{item}}</button>
+                        </div>
+
+                    </div>
+                    <div class="card-footer text-muted">
+                        <span>Last updated at:</span> {{item.updated_at|date}}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="card" *ngIf="pagecount==0 && repoDetails">
+            <div class="card-body">
+                No Repositories found for {{userDetail.login}} user
+            </div>
+        </div>
+        <div class="row" style="padding-top: 20px;">
+            <div class="offset-md-4" *ngIf="pagecount>1">
+                <nav aria-label="...">
+                    <ul class="pagination">
+                        <li class="page-item" [ngClass]="{'disabled': currentPage<=1}">
+                            <a class="page-link" (click)="goto(currentPage-1)">Prev</a>
+                        </li>
+                        <li class="page-item" [ngClass]="{'active': currentPage == i+1}"
+                            *ngFor="let item of [].constructor(pagecount); let i = index"> <a class="page-link"
+                                (click)="goto(i+1)">{{i+1}}</a></li>
+
+                        <li class="page-item" [ngClass]="{'disabled': currentPage==pagecount}">
+                            <a class="page-link" (click)="goto(currentPage+1)">Next</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
