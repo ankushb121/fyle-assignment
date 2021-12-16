@@ -24,10 +24,6 @@ export class HttpInterceptorService implements HttpInterceptor {
     }, (err: any) => {
       if (err instanceof HttpErrorResponse) {
         this.httpService.changeApiStatus(false);
-        if (err.status) {
-          
-          
-        }  
       }
     }));
   }
